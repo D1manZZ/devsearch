@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="wrapper row">
+        <div class="col-md-6 col-sm-12" style="margin: 0 auto 40px auto;">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Submit changes" style="width: 100%; color: white; background-color: blue; padding: 10px 0; border: none; border-radius: 10px;">
+            </form>
+        </div>
+    </div>
+{% endblock %}

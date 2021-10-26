@@ -1,0 +1,50 @@
+{% load static %}
+{% url 'projects' as projects %}
+{% url 'developers' as developers %}
+{% url 'profile' request.user.profile.id as profile %}
+{% url 'messages' as messages %}
+<nav>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'projects' %}">Devsearch</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+                    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                    <li class="nav-item">
+                        <a class="nav-link {% if  request.get_full_path == projects %}active{% endif %}"
+                           aria-current="page" href="{% url 'projects' %}">Projects</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if  request.get_full_path == developers %}active{% endif %}"
+                           href="{% url 'developers' %}">Developers</a>
+                    </li>
+                    {% if request.user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link {% if  request.get_full_path == profile %}active{% endif %}"
+                               href="{% url 'profile' request.user.profile.id %}">Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if  request.get_full_path == messages %}active{% endif %}"
+                               href="{% url 'messages' %}">Messages</a>
+                        </li>
+
+                    {% endif %}
+                </ul>
+                <div style="color: white;">
+                    {% if request.user.is_authenticated %}
+                        <a href="{% url 'logout' %}" class="log">
+                            logout
+                        </a>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="log">
+                            Login
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+</nav>

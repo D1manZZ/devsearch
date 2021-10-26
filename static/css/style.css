@@ -1,0 +1,147 @@
+body {
+    font-family: 'Raleway', sans-serif;
+    padding: 0;
+    margin: 0;
+}
+
+img {
+    max-width: 100%;
+}
+
+.hover-blur:hover img {
+    animation-name: img-blur;
+    animation-duration: 0.2s;
+    filter: blur(1px);
+}
+
+.hover-blur:hover {
+    border: 1px solid black;
+    animation-name: border-appear;
+    animation-duration: 1s;
+}
+
+@keyframes img-blur {
+    from {
+        filter: blur(0);
+    }
+    to {
+        filter: blur(1px);
+    }
+}
+
+@keyframes border-appear {
+    from {
+        border: 1px solid gray;
+    }
+    to {
+        border: 1px solid black;
+    }
+}
+
+.wrapper {
+    padding-top: 75px;
+}
+
+a, a:hover {
+    text-decoration: none;
+    color: black;
+}
+
+.log {
+    color: white;
+}
+
+.log:hover {
+    color: gainsboro;
+}
+
+.button-animation:hover {
+    animation-name: button-animate;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes button-animate {
+    to {
+        background-color: green;
+        border: 1px solid green;
+        color: white;
+    }
+}
+
+.button {
+    display: block;
+    color: white;
+    background-color: blue;
+    margin-bottom: 20px;
+    padding: 10px 0;
+    border-radius: 10px;
+    border: none;
+    width: 100%;
+}
+
+.button:hover {
+    color: white;
+}
+
+.tag {
+    padding: 3px 8px;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+}
+
+.non-click-tag {
+    padding: 0 8px;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    margin-bottom: 5px;
+}
+
+.tag:hover {
+    cursor: pointer;
+    background-color: #f0f0f0;
+}
+
+#comment label:hover {
+    cursor: pointer;
+}
+
+#comment label:hover .fa-thumbs-up {
+    color: #4dff52;
+}
+
+#comment label:hover .fa-thumbs-down {
+    color: #ff5e5e;
+}
+
+#comment input[type=radio]:checked + label .fa-thumbs-up {
+    color: green;
+}
+
+#comment input[type=radio]:checked + label .fa-thumbs-down {
+    color: red;
+}
+
+.alert {
+    animation-name: disappear;
+    animation-duration: 5s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes disappear {
+    90% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        display: none;
+    }
+}
+
+.search-form:focus {
+    outline: none;
+}
+
+input:active {
+    outline: none;
+}

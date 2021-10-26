@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="wrapper">
+        <div class="row" style="padding-top: 10px; margin-bottom: 10px;">
+            <form method="get" style="text-align: center; margin: 0 auto 30px auto;" class="col-md-6 col-sm-12">
+                <h2 style="margin-bottom: 15px;">
+                    <label for="search">Search developers by name, bio or skills</label>
+                </h2>
+                <div style="display: flex;">
+                    <input type="text" name="search" class='search-form' placeholder="type filter words here..."
+                           value="{{ search_phrase }}"
+                           style="font-style: italic; width: 100%; padding: 7px 20px 7px 10px; border-radius: 5px; border: 2px solid #272836; margin-right: 10px;">
+                    <input type="submit" value="Search"
+                           style="padding: 7px 20px; background-color: #272836; color: white; border: 2px solid #272836; border-radius: 5px;">
+                </div>
+            </form>
+        </div>
+        <div class="row justify-content-evenly">
+        {% if not developers %}
+            <h2>Nothing found...</h2>
+        {% endif %}
+        {% for developer in developers %}
+            <a href="{% url 'profile' developer.id %}" class='col-md-3 col-sm-12'
+               style="display: block; border: 2px solid lightgray; padding: 0 15px; border-radius: 8px; margin: 0 5px 30px 5px; text-align: center;">
+                <img src="
+
+
+
+
+
+
+
+
+
+                        {% if developer.image %}{{ developer.image.url }}{% else %}{% static 'images/avatar_default.png' %}{% endif %}"
+                     style="border-radius: 50%; margin: 10px 0; min-width: 100%;">
+                <h3>{{ developer.name }}
+                    {% if request.user.is_authenticated %}
+                        {% if request.user.profile.id == developer.id %}
+                            (you)
+                        {% endif %}
+                    {% endif %}</h3>
+                {% if developer.short_intro %}
+                    <p>{{ developer.short_intro }}</p>
+                {% endif %}
+                {% if developer.skills.all %}
+                    <div style="margin-bottom: 20px; text-align: left;">
+                        {% for skill in developer.skills.all %}
+                            <span class="non-click-tag" style="display: inline-block;">{{ skill }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </a>
+        {% endfor %}
+        </div>
+    </div>
+{% endblock %}

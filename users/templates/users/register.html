@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+        <form method="post">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="row" style="margin: 10px 0;">
+                    {{ field.label }}:
+                    {{ field }}
+                <div style="color: red;">
+                    {% for error in field.errors %}
+                        {{ error }}<br>
+                    {% endfor %}
+                </div>
+                </div>
+            {% endfor %}
+            <input type="submit" value="Register"
+                   style="width: 100%; background-color: blue; color: white; padding: 10px 0; margin-top: 10px; border-radius: 5px; border: none;">
+            <small style="text-align: right; padding-right: 7px; margin-top: 5px; display: block;"><a
+                    style="color: black; text-decoration: underline;" href={% url 'login' %}>already have
+                account?</a></small>
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="wrapper">
+        <div class="row justify-content-around">
+            <div class='col-md-3 col-sm-12'
+                 style="border: 2px solid lightgray; height: 100%; border-radius: 8px; margin-bottom: 30px; text-align: center;">
+                <img src="
+
+
+
+
+
+
+                        {% if profile.image %}{{ profile.image.url }}{% else %}{% static 'images/avatar_default.png' %}{% endif %}"
+                     style="border-radius: 50%; margin: 10px 0; min-width: 100%;">
+                <h3>{{ profile.name }}</h3>
+                {% if profile.short_intro %}
+                    <p>{{ profile.short_intro }}</p>
+                {% endif %}
+                {% if request.user.is_authenticated %}
+                    {% if request.user.profile.id == profile.id %}
+                        <a href="{% url 'edit_profile' %}" class="button">Edit
+                            profile</a>
+                    {% else %}
+                        <a href="{% url 'send_message' profile.pk %}" class="button">Send message</a>
+                    {% endif %}
+                {% endif %}
+            </div>
+            <div class="col-md-8 col-sm-12" style="padding-left: 0;">
+                {% if profile.bio %}
+                    <div style="margin-bottom: 20px;">
+                        <h3>About me</h3>
+                        {{ profile.bio }}
+                    </div>
+                {% endif %}
+                {% if profile.skills.all %}
+                    <div style="margin-bottom: 20px;">
+                        <h3>Skills</h3>
+                        {% for skill in profile.skills.all %}
+                            <span class="tag"><a href="{% url 'developers' %}?search={{ skill }}">{{ skill }}</a></span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                <div>
+                    {% if profile.project_set.all or request.user.profile.id == profile.id %}
+                        <h3>Projects</h3>
+                    {% endif %}
+                    {% if request.user.profile.id == profile.id %}
+                        <a href="{% url 'add_project' %}"><span class='button-animation'
+                                                                style="color: black; border: 1px solid lightgray; padding: 7px 18px; border-radius: 10px;">Add project +</span></a>
+                    {% endif %}
+                    <div class='row' style="margin: 20px 0;">
+                        {% for project in profile.project_set.all %}
+                            <a href="{% url 'project' project.pk %}"
+                               style="text-decoration: none; padding: 0; color: black; display: block; margin: 10px;"
+                               class="hover-blur card col-lg-3 col-md-6 col-sm-12">
+                                <img src="
+
+
+
+
+                                        {% if project.image %}{{ project.image.url }}{% else %}{% static 'images/default-thumbnail.jpg' %}{% endif %}"
+                                     class="card-img-top" style="width: 100%;">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ project.name }}</h5>
+                                    <p class="card-text">
+                                        {{ project.description|slice:50 }}{% if project.description|length > 50 %}
+                                            ...{% endif %}</p>
+                                </div>
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div style="height: 100vh; width: 100%; display: flex; justify-content: center; align-items: center; flex-direction: column;">
+        <form method="post" style="display: block;">
+            {% csrf_token %}
+            <input class='form-control' type="text" name="username" placeholder="username" value='{{ values.username }}' style="margin-bottom: 10px;">
+            <input class='form-control' type="password" name="password" value='{{ values.password }}' placeholder="password" style="margin-bottom: 10px;">
+            <input class='form-control' type="submit" value="Login">
+            <small style="display: block; width: 100%; margin-top: 5px; margin-right: 10px; text-align: right;"><a
+                    href="{% url 'register' %}" style="color: black; text-decoration: underline;">Create a account</a></small>
+                        <small style="display: block; width: 100%; margin-top: 5px; margin-right: 10px; text-align: right;"><a
+                    href="{% url 'password_reset' %}" style="color: black; text-decoration: underline;">Forget a password</a></small>
+        </form>
+    </div>
+{% endblock %}

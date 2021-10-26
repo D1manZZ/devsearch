@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="wrapper">
+        <div class="row" style="padding-top: 10px; margin-bottom: 10px;">
+            <form method="get" style="text-align: center; margin: 0 auto 30px auto;" class="col-md-6 col-sm-12">
+                <h2 style="margin-bottom: 15px;">
+                    <label for="search">Search projects by name, description or technology</label>
+                </h2>
+                <div style="display: flex;">
+                    <input type="text" name="search" class='search-form' placeholder="type filter words here..."
+                           value="{{ search_phrase }}"
+                           style="font-style: italic; width: 100%; padding: 7px 20px 7px 10px; border-radius: 5px; border: 2px solid #272836; margin-right: 10px;">
+                    <input type="submit" value="Search"
+                           style="padding: 7px 20px; background-color: #272836; color: white; border: 2px solid #272836; border-radius: 5px;">
+                </div>
+            </form>
+        </div>
+        <div class="row justify-content-evenly">
+            {% if not projects %}
+                <h2>Nothing found...</h2>
+            {% endif %}
+            {% for project in projects %}
+                <a href="{% url 'project' project.pk %}"
+                   style="text-decoration: none; padding: 0; color: black; display: block; margin: 0 5px 30px 5px;"
+                   class="hover-blur card col-lg-3 col-md-6 col-sm-12">
+                    <img src="
+
+
+
+
+
+
+
+
+
+
+
+
+                            {% if project.image %}{{ project.image.url }}{% else %}{% static 'images/default-thumbnail.jpg' %}{% endif %}"
+                         class="card-img-top" style="min-width: 100%;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ project.name }}</h5>
+                        <div class="card-text">
+                            {% if project.tags.all %}
+                                <p style="text-align: left; margin: 8px 0 5px 0;">
+                                    {% for skill in project.tags.all %}
+                                        <span class="non-click-tag" style="display: inline-block;">{{ skill }}</span>
+                                    {% endfor %}
+                                </p>
+                            {% endif %}
+                            <p>{{ project.description|slice:100 }}{% if project.description|length > 100 %}
+                                ...{% endif %}</p>
+                        </div>
+                    </div>
+
+                </a>
+            {% endfor %}
+        </div>
+        {% if projects.has_other_pages %}
+            <div class="pagination">
+                <nav aria-label="Page navigation example" style="margin: 0 auto;">
+                    <ul class="pagination">
+                        {% if projects.has_previous %}
+                            <li class="page-item"><a class="page-link"
+                                                     href="?page={{ projects.previous_page_number }}"><</a>
+                            </li>
+                        {% endif %}
+                        {% if projects.number|add:-3 > 1 %}
+                            <li class="page-item"><a class="page-link"
+                                                     href="?page=1">1</a>
+                            </li>
+                            <li class="page-item"><a class="page-link"
+                                                     href="#">...</a>
+                            </li>
+                        {% endif %}
+                        {% for page in custom_range %}
+                            <li class="page-item {% if page == projects.number %}active{% endif %}"><a class="page-link"
+                                                                                                       href="?page={{ page }}">{{ page }}</a>
+                            </li>
+                        {% endfor %}
+                        {% if projects.number|add:3 < paginator.count %}
+                            <li class="page-item"><a class="page-link"
+                                                     href="#">...</a>
+                            </li>
+                            <li class="page-item"><a class="page-link"
+                                                     href="?page={{ paginator.count }}">{{ paginator.count }}</a>
+                            </li>
+                        {% endif %}
+                        {% if projects.has_next %}
+                            <li class="page-item"><a class="page-link"
+                                                     href="?page={{ projects.next_page_number }}">></a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

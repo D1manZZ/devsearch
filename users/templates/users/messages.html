@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="wrapper">
+        {% if not profiles_list %}
+            <h3>You dont have any message</h3>
+        {% endif %}
+        {% for el in profiles_list %}
+            <a href="{% url 'send_message' el.profile.id %}">
+                <div style="padding: 10px 25px 10px 15px; border: 1px solid lightgray; border-radius: 5px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
+                    <div style="display: flex; align-items: center;">
+                        <div style="width: 75px; margin-right: 10px;">
+                            <img src="{% if el.profile.image %}{{ el.profile.image.url }}{% else %}
+                    {% static 'images/avatar_default.png' %}{% endif %}" style="border-radius: 50%;">
+                        </div>
+                        <div>
+                            <div>
+                                <h4>{{ el.profile.name }}</h4>
+                            </div>
+                            <div style="{% if not el.last_message.checked and el.last_message.recipient == request.user.profile %}font-weight: bold;{% endif %}">
+                                {{ el.last_message.text }}
+                            </div>
+                        </div>
+                    </div>
+                    {% if el.new_messages %}
+                        <div style="padding: 0; height: 30px; width: 30px; background: blue; color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center;">
+                            {{ el.new_messages }}
+                        </div>
+                    {% endif %}
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+{% endblock %}
